@@ -1,7 +1,7 @@
 kotan library
 ----------------------
 
-Will _(try)_ make easier to kode for android using kotlin language
+Will try make easier to kode for android using kotlin language
 
 Currently author uses it only in his own projects and it's definitely not even alpha stage but any contributions, ideas
  and requests are welcome.
@@ -61,8 +61,9 @@ as we work with variables
             var myName by super.StringValue("moo")
         }
 
-  At the moment due bug in (kotlin KT-6727)[https://youtrack.jetbrains.com/issue/KT-6727#comment=27-935290] you have to
-  insert ```super.``` before name of delegate(which declared in ```Preferences```)
+  At the moment due bug in [kotlin (KT-6727)](https://youtrack.jetbrains.com/issue/KT-6727#comment=27-935290) you have to insert ```super.``` before name of delegate(which declared in ```Preferences```)
+
+  Currently available: ```StringValue```, ```IntValue```, ```LongValue```, ```FloatValue```
 
 * Then, create instance of this preferences and use it just generic class:
 

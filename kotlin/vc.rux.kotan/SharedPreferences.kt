@@ -7,6 +7,7 @@ import kotlin.properties.ReadWriteProperty
 
 /**
  * Shared preferences helper
+ * (obsolete way)
  */
 
 public fun Context.loadPref<T>(key: String, default: T): T {
