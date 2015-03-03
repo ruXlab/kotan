@@ -10,30 +10,34 @@ Find view
 ======================
 Can be done by using delegate: ```LazyView```
 
-    public open class BaseActivity : Activity() {
-        private val myName by LazyView<TextView>(R.id.mainMyName)
-        private val bermudaButton by LazyView<Button?>(R.id.mainBermudaButton)
-    }
+```kotlin
+public open class BaseActivity : Activity() {
+    private val myName by LazyView<TextView>(R.id.mainMyName)
+    private val bermudaButton by LazyView<Button?>(R.id.mainBermudaButton)
+}
+```
 
 
-If view _can be_ in layout you have to make it nullable
+If view _can be(i.e. optional)_ in layout you have to make it nullable like **TextView?**, **ListView?**, etc
 
 View events binding
 ======================
 
 Main concept of UI event handling is registering callbacks via functions started with **on**, such as ```onClick``` or ```onLongClick```
 
-    public open class BaseActivity : Activity() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
+```kotlin
+public open class BaseActivity : Activity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-            setContentView(R.layout.main)
+        setContentView(R.layout.main)
 
-            bermudaButton?.onClick {
-                myName.setText("Place your name here")
-            }
+        bermudaButton?.onClick {
+            myName.setText("Place your name here")
         }
     }
+}
+```
 
 
 
@@ -55,30 +59,60 @@ as we work with variables
 
 * Let's declare our persistent preferences storage. Just subclass ```Preferences``` providing
   any ```Context``` reference and name of preferences
-
-        class Configuration(context: Context): Preferences(context, "cfg") {
-            var sheepCounter by super.IntValue(0)
-            var myName by super.StringValue("moo")
-        }
+    ```kotlin
+    class Configuration(context: Context): Preferences(context, "cfg") {
+        var sheepCounter by super.IntValue(0)
+        var myName by super.StringValue("moo")
+    }
+    ```
 
   At the moment due bug in [kotlin (KT-6727)](https://youtrack.jetbrains.com/issue/KT-6727#comment=27-935290) you have to insert ```super.``` before name of delegate(which declared in ```Preferences```)
 
   Currently available: ```StringValue```, ```IntValue```, ```LongValue```, ```FloatValue```
 
 * Then, create instance of this preferences and use it just generic class:
+    ```kotlin
+    public open class BaseActivity : Activity() {
+        val cfg = Configuration(this)
 
-        public open class BaseActivity : Activity() {
-            val cfg = Configuration(this)
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
 
-            override fun onCreate(savedInstanceState: Bundle?) {
-                super.onCreate(savedInstanceState)
+            setContentView(R.layout.main)
 
-                setContentView(R.layout.main)
-
-                bermudaButton?.onClick {
-                    cfg.sheepCounter++
-                    cfg.myName = "${cfg.myName} moo"
-                    myName.setText(cfg.myName)
-                }
+            bermudaButton?.onClick {
+                cfg.sheepCounter++
+                cfg.myName = "${cfg.myName} moo"
+                myName.setText(cfg.myName)
             }
         }
+    }
+    ```
+
+
+
+Installation
+----------------
+
+* At the moment you can include **kotan** library into your project as submodule in your project
+    
+        git add submodule https://github.com/ruXlab/kotan kotan
+
+
+* Also you have to add dependency in ```gradle.build```
+  ```gradle
+    dependencies {
+         . . .
+         compile project(":kotan")
+    }
+    android {
+        dependencies {
+            . . .
+            compile project(":kotan")
+        }
+    }
+  ```
+    
+* Final step - import into your namespace
+    
+        import vc.rux.kotan.*
