@@ -1,5 +1,5 @@
 kotan library
-----------------------
+==========================
 
 Will try make easier to kode for android using kotlin language
 
@@ -7,7 +7,7 @@ Currently author uses it only in his own projects and it's definitely not even a
  and requests are welcome.
 
 Find view
-======================
+----------------------------
 Can be done by using delegate: ```LazyView```
 
 ```kotlin
@@ -21,7 +21,7 @@ public open class BaseActivity : Activity() {
 If view _can be(i.e. optional)_ in layout you have to make it nullable like **TextView?**, **ListView?**, etc
 
 View events binding
-======================
+---------------------------------
 
 Main concept of UI event handling is registering callbacks via functions started with **on**, such as ```onClick``` or ```onLongClick```
 
@@ -44,14 +44,14 @@ public open class BaseActivity : Activity() {
 
 
 View manipulation
-===================
+------------------------------
 
 // TODO
 
 
 
 SharedProperties / Settings
-============================
+------------------------------
 
 Working with SharedPreferences is awful I hope you know it. Lets use power of kotlin to make work with settings as simple
 as we work with variables
@@ -111,6 +111,10 @@ Installation
             compile project(":kotan")
         }
     }
+  ```
+* And into ```settings.build```
+  ```gradle
+  include ':kotan'
   ```
     
 * Final step - import into your namespace
