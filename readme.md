@@ -40,6 +40,16 @@ public open class BaseActivity : Activity() {
 ```
 
 
+ListView
+-----------------
+
+List item click handler:
+
+```kotlin
+    list.onItemClick<Fruit> { fruit ->
+        // process choosed fruit
+    }
+```
 
 
 
@@ -47,6 +57,8 @@ View manipulation
 ------------------------------
 
 // TODO
+
+
 
 
 
@@ -96,7 +108,7 @@ Installation
 
 * At the moment you can include **kotan** library into your project as submodule in your project
     
-        git add submodule https://github.com/ruXlab/kotan kotan
+        git submodule add https://github.com/ruXlab/kotan kotan
 
 
 * Also you have to add dependency in ```gradle.build```
