@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.1.0'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:0.10.770'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:0.11.91.1'
     }
 }
 
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.10.770'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.11.91.1'
 }
 
 

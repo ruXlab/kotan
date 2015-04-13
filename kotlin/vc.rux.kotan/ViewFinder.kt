@@ -27,7 +27,7 @@ class LazyView<T>(private val viewId: Int) : FindViewBase<T>(viewId) {
     private var value: T = null
 
     override fun get(thisRef: Any, desc: PropertyMetadata): T {
-        if (value == null) value = findById(viewId)
+        if (value == null) value = findById(thisRef)
         return value
     }
 }
@@ -35,10 +35,10 @@ class LazyView<T>(private val viewId: Int) : FindViewBase<T>(viewId) {
 /**
  * Find UI component
  */
-class FindView<T>(private val viewId: Int) : FindViewBase<T>(viewId) {
-    private val value: T = findById(viewId)
-
-    override fun get(thisRef: Any, desc: PropertyMetadata): T {
-        return value
-    }
-}
+//class FindView<T>(private val viewId: Int) : FindViewBase<T>(viewId) {
+//    private val value: T = findById(viewId)
+//
+//    override fun get(thisRef: Any, desc: PropertyMetadata): T {
+//        return value
+//    }
+//}

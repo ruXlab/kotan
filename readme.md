@@ -18,7 +18,13 @@ public open class BaseActivity : Activity() {
 ```
 
 
-If view _can be(i.e. optional)_ in layout you have to make it nullable like **TextView?**, **ListView?**, etc
+If view might exists(i.e. optional)_ in layout you have to make it nullable like **TextView?**, **ListView?**, etc.
+This delegate will work for following type of UI components:
+
+* **Activity**. It must be accessed after ```setContentView()```
+* **Fragment**. I would recommend to return inflated layout in ```onCreateView()``` and start working with layout in following
+lifecycle methods such as ```onActivityCreated()```
+* **View**. It's possible to access to UI components anywhere in your code after the inflation process finished(if any).
 
 View events binding
 ---------------------------------
@@ -113,10 +119,6 @@ Installation
 
 * Also you have to add dependency in ```gradle.build```
   ```gradle
-    dependencies {
-         . . .
-         compile project(":kotan")
-    }
     android {
         dependencies {
             . . .
