@@ -27,6 +27,17 @@ public open class Preferences (
 
     }
 
+
+    inner class BooleanValue(defaultValue: Boolean, name: String? = null): AbstractValue<Boolean>(defaultValue, name) {
+        override fun get(thisRef: Preferences, desc: PropertyMetadata): Boolean =
+                thisRef.prefs.getBoolean(detectName(desc), defaultValue)
+
+
+        override fun set(thisRef: Preferences, desc: PropertyMetadata, value: Boolean) =
+                thisRef.edit { editor -> editor.putBoolean(detectName(desc), value) }
+    }
+
+
     inner class IntValue(defaultValue: Int, name: String? = null): AbstractValue<Int>(defaultValue, name) {
         override fun get(thisRef: Preferences, desc: PropertyMetadata): Int =
                 thisRef.prefs.getInt(detectName(desc), defaultValue)
