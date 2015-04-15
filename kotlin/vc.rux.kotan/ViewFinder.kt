@@ -13,7 +13,7 @@ private abstract class FindViewBase<T>(private val viewId: Int) : ReadOnlyProper
         if (thisRef is Activity)
             thisRef.findViewById(viewId) as T
         else if (thisRef is Fragment)
-            thisRef.getView().findViewById(viewId) as T
+            thisRef?.getView()?.findViewById(viewId) as T
         else if (thisRef is View)
             thisRef.findViewById(viewId) as T
         else throw IllegalArgumentException("Delegate can't be attached to this object")
