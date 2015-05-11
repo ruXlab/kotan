@@ -1,7 +1,7 @@
 kotan library
 ==========================
 
-Will try make easier to kode for android using kotlin language
+Easy koding for android using kotlin language
 
 Currently author uses it only in his own projects and it's definitely not even alpha stage but any contributions, ideas
  and requests are welcome.
@@ -107,6 +107,44 @@ as we work with variables
     }
     ```
 
+
+Broadcast messages handling
+--------------
+
+Android have very powerful broadcast messaging mechanism but down the road it's always unhandy.
+
+Kotan will help you to use in very easy way
+
+* Describe entities you going to send, as well your broadcast events
+    ```kotlin
+        object NEW_MESSAGE: Broadcast<ChatMessage>()
+        object DATABASE_UPDATED: Broadcast<DatabaseDetails>()
+        object COFFEE_READY: Broadcast<Coffee>()
+    ```
+
+* **Send it**.
+    ```kotlin
+        COFFEE_READY.sendBroadcast(context, Coffee("latte"))
+    ```
+
+* **Receive it**. Don't forget to register your receiver
+    ```kotlin
+        class CoffeeActivity: Activity() {
+            val coffeeReceiver = COFFEE_READY.broadcastReceiver(this) { coffee ->
+                toastLong("Your ${coffee.name} is ready to drink, sir")
+            }
+
+            override fun onStart() {
+                super.onStart()
+                coffeeReceiver.register(this)
+            }
+
+            override fun onStop() {
+                super.onStop()
+                coffeeReceiver.unregister(this)
+            }
+        }
+    ```
 
 
 Installation
