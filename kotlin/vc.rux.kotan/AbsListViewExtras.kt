@@ -1,16 +1,10 @@
 package vc.rux.kotan
 
 import android.view.View
-import android.app.Activity
-import android.view.View.OnClickListener
-import android.view.View.OnLongClickListener
-import android.view.MotionEvent
-import android.view.View.OnTouchListener
 import android.widget.AbsListView
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.Adapter
 import android.widget.AdapterView
-import android.widget.ListView
+import android.widget.AdapterView.OnItemClickListener
 
 
 /**
@@ -27,7 +21,7 @@ public inline fun AbsListView.onItemClick<reified T>([inlineOptions(InlineOption
 
 
 /**
- * Add item click listener which accepts entity as param
+ * Add item click listener which accepts entity as generic
  */
 public inline fun AbsListView.onItemClick<reified T>([inlineOptions(InlineOption.ONLY_LOCAL_RETURN)] action: (T) -> Unit): AbsListView {
     setOnItemClickListener(object: OnItemClickListener {
@@ -37,6 +31,21 @@ public inline fun AbsListView.onItemClick<reified T>([inlineOptions(InlineOption
     })
     return this
 }
+
+
+/**
+ * Add item click listener which accepts entity as generic
+ */
+public inline fun AbsListView.onLongItemClick<reified T>([inlineOptions(InlineOption.ONLY_LOCAL_RETURN)] action: (T) -> Unit): AbsListView {
+    setOnItemLongClickListener(object: AdapterView.OnItemLongClickListener {
+        override fun onItemLongClick(parent: AdapterView<*>, view: View?, position: Int, id: Long): Boolean {
+            action.invoke(parent.getAdapter()?.getItem(position) as T)
+            return true
+        }
+    })
+    return this
+}
+
 // not working yet
 //public inline fun ListView.onItemClick<reified T>([inlineOptions(InlineOption.ONLY_LOCAL_RETURN)] action: (T) -> Unit): ListView {
 //    return onItemClick<T> { (item: T, position: Int) -> action(item) }
