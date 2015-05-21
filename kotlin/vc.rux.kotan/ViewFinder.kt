@@ -4,6 +4,7 @@ import kotlin.properties.ReadOnlyProperty
 import android.app.Activity
 import android.app.Fragment
 import android.view.View
+import kotlin.properties.Delegates
 
 /**
  * Helper class, implements findView for different types of UI object
@@ -20,6 +21,7 @@ private abstract class FindViewBase<T>(private val viewId: Int) : ReadOnlyProper
 
 }
 
+
 /**
  * Lazy implementation of findView. Will be evaluated on first access
  */
@@ -31,6 +33,19 @@ class LazyView<T>(private val viewId: Int) : FindViewBase<T>(viewId) {
         return value
     }
 }
+
+/**
+ * Lazy implementation of findView. Will be evaluated on first access
+ */
+class LazyViewCustomParent<T>(val viewId: Int, val parentView: View): ReadOnlyProperty<Any, T> {
+    private var value: T = null
+
+    override fun get(thisRef: Any, desc: PropertyMetadata): T { Delegates
+        if (value == null) value = parentView.findViewById(viewId) as T
+        return value
+    }
+}
+
 
 /**
  * Find UI component

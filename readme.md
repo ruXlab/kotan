@@ -115,35 +115,35 @@ Android have very powerful broadcast messaging mechanism but down the road it's 
 
 Kotan will help you to use in very easy way
 
-* Describe entities you going to send, as well your broadcast events
+* Describe entities you going to send, as well your broadcast events. Remember your entities **must** implement ```Serializable```
     ```kotlin
-        object NEW_MESSAGE: Broadcast<ChatMessage>()
-        object DATABASE_UPDATED: Broadcast<DatabaseDetails>()
-        object COFFEE_READY: Broadcast<Coffee>()
+    object NEW_MESSAGE: Broadcast<ChatMessage>()
+    object DATABASE_UPDATED: Broadcast<DatabaseDetails>()
+    object COFFEE_READY: Broadcast<Coffee>()
     ```
 
 * **Send it**.
     ```kotlin
-        COFFEE_READY.sendBroadcast(context, Coffee("latte"))
+    COFFEE_READY.sendBroadcast(context, Coffee("latte"))
     ```
 
 * **Receive it**. Don't forget to register your receiver
     ```kotlin
-        class CoffeeActivity: Activity() {
-            val coffeeReceiver = COFFEE_READY.broadcastReceiver(this) { coffee ->
-                toastLong("Your ${coffee.name} is ready to drink, sir")
-            }
-
-            override fun onStart() {
-                super.onStart()
-                coffeeReceiver.register(this)
-            }
-
-            override fun onStop() {
-                super.onStop()
-                coffeeReceiver.unregister(this)
-            }
+    class CoffeeActivity: Activity() {
+        val coffeeReceiver = COFFEE_READY.broadcastReceiver(this) { coffee ->
+            toastLong("Your ${coffee.name} is ready to drink, sir")
         }
+
+        override fun onStart() {
+            super.onStart()
+            coffeeReceiver.register(this)
+        }
+
+        override fun onStop() {
+            super.onStop()
+            coffeeReceiver.unregister(this)
+        }
+    }
     ```
 
 
