@@ -36,6 +36,8 @@ abstract class ExtendedBroadcastReceiver(
         val filter: IntentFilter
 ): BroadcastReceiver() {
     fun register(context: Context) = context.registerReceiver(this, filter)
-    fun unregister(context: Context) = context.unregisterReceiver(this)
+    fun unregister(context: Context) =
+        try { context.unregisterReceiver(this) }
+        catch (ignore: Exception) { /* any better suggestions? */ }
 }
 
