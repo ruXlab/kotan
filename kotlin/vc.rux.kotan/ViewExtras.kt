@@ -35,6 +35,13 @@ public fun View.setVisibility(isVisible: Boolean): View {
 }
 
 /**
+ * Set/get visibility state of view
+ */
+var View.isVisible: Boolean
+    get() = getVisibility() == View.VISIBLE
+    set(x: Boolean) { setVisibility(isVisible) }
+
+/**
  * Post task for delayed execution on main thread
  */
 public fun View.postDelayed(timeout: Number, inline action: (view: View) -> Unit): View {
