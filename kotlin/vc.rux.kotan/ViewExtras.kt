@@ -39,7 +39,7 @@ public fun View.setVisibility(isVisible: Boolean): View {
  */
 var View.isVisible: Boolean
     get() = getVisibility() == View.VISIBLE
-    set(x: Boolean) { setVisibility(isVisible) }
+    set(x: Boolean) { setVisibility(x) }
 
 /**
  * Post task for delayed execution on main thread
