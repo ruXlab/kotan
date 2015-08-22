@@ -2,6 +2,7 @@ package vc.rux.kotan
 
 import android.content.Context
 import android.content.SharedPreferences
+import java.sql.Date
 import kotlin.properties.ReadWriteProperty
 import kotlin.properties.Delegates
 
@@ -74,5 +75,13 @@ public open class Preferences (
                 thisRef.edit { editor -> editor.putString(detectName(desc), value) }
     }
 
+    inner class DateValue(defaultValue: Date, name: String? = null): AbstractValue<Date>(defaultValue, name) {
+        override fun get(thisRef: Preferences, desc: PropertyMetadata): Date =
+                Date(thisRef.prefs.getLong(detectName(desc), defaultValue.getTime()))
+
+        override fun set(thisRef: Preferences, desc: PropertyMetadata, value: Date) =
+                thisRef.edit { editor -> editor.putLong(detectName(desc), value.getTime()) }
+
+    }
 
 }
