@@ -8,7 +8,6 @@ import kotlin.properties.Delegates
 
 /**
  * Wraps SharedPreferences interface to make it more handsome
- *
  */
 public open class Preferences (
         val context: Context,

@@ -1,16 +1,16 @@
 package vc.rux.kotan
 
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 
 /**
  * Set handler for click
  */
 public fun View.onClick(inline clickHandler: () -> Unit): View {
-    setOnClickListener(object: View.OnClickListener {
-        override fun onClick(v: View?) {
-            clickHandler()
-        }
-    })
+    setOnClickListener() {
+        clickHandler()
+    }
     return this
 }
 
@@ -18,13 +18,33 @@ public fun View.onClick(inline clickHandler: () -> Unit): View {
  * Set handler for long click
  */
 public fun View.onLongClick(inline clickHandler: () -> Boolean): View {
-    setOnLongClickListener(object: View.OnLongClickListener {
-        override fun onLongClick(v: View?): Boolean {
-            return clickHandler()
-        }
-    })
+    setOnLongClickListener() {
+        clickHandler()
+    }
     return this
 }
+
+/**
+ * Set handler for touch
+ */
+public fun View.onTouchListener(inline touchHandler: (event: MotionEvent) -> Boolean): View {
+    setOnTouchListener() { v: View, event: MotionEvent ->
+        touchHandler(event)
+    }
+    return this
+}
+
+
+/**
+ * Set handler for motion
+ */
+public fun View.onGenericMotionListener(inline motionHandler: (event: MotionEvent) -> Boolean): View {
+    setOnGenericMotionListener() { view: View, event: MotionEvent ->
+        motionHandler(event)
+    }
+    return this
+}
+
 
 /**
  * Set view visibility state: visible or gone
@@ -37,9 +57,8 @@ public fun View.setVisibility(isVisible: Boolean): View {
 /**
  * Set/get visibility state of view
  */
-var View.isVisible: Boolean
+val View.isVisible: Boolean
     get() = getVisibility() == View.VISIBLE
-    set(x: Boolean) { setVisibility(x) }
 
 /**
  * Post task for delayed execution on main thread
