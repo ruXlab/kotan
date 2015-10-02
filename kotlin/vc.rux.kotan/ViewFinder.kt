@@ -9,7 +9,7 @@ import kotlin.properties.Delegates
 /**
  * Helper class, implements findView for different types of UI object
  */
-private abstract class FindViewBase<T>(private val viewId: Int) : ReadOnlyProperty<Any, T> {
+private abstract class FindViewBase<T: View>(private val viewId: Int) : ReadOnlyProperty<Any, T> {
     protected fun findById(thisRef: Any): T =
         if (thisRef is Activity)
             thisRef.findViewById(viewId) as T
@@ -25,24 +25,24 @@ private abstract class FindViewBase<T>(private val viewId: Int) : ReadOnlyProper
 /**
  * Lazy implementation of findView. Will be evaluated on first access
  */
-class LazyView<T>(private val viewId: Int) : FindViewBase<T>(viewId) {
-    private var value: T = null
+class LazyView<T: View>(private val viewId: Int) : FindViewBase<T>(viewId) {
+    private var value: T? = null
 
     override fun get(thisRef: Any, desc: PropertyMetadata): T {
         if (value == null) value = findById(thisRef)
-        return value
+        return value!!
     }
 }
 
 /**
  * Lazy implementation of findView. Will be evaluated on first access
  */
-class LazyViewCustomParent<T>(val viewId: Int, val parentView: View): ReadOnlyProperty<Any, T> {
-    private var value: T = null
+class LazyViewCustomParent<T: Any>(val viewId: Int, val parentView: View): ReadOnlyProperty<Any, T> {
+    private var value: T? = null
 
     override fun get(thisRef: Any, desc: PropertyMetadata): T { Delegates
         if (value == null) value = parentView.findViewById(viewId) as T
-        return value
+        return value!!
     }
 }
 

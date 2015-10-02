@@ -7,7 +7,7 @@ import android.view.View
 /**
  * Set handler for click
  */
-public fun View.onClick(inline clickHandler: () -> Unit): View {
+public fun View.onClick(clickHandler: () -> Unit): View {
     setOnClickListener() {
         clickHandler()
     }
@@ -17,7 +17,7 @@ public fun View.onClick(inline clickHandler: () -> Unit): View {
 /**
  * Set handler for long click
  */
-public fun View.onLongClick(inline clickHandler: () -> Boolean): View {
+public fun View.onLongClick(clickHandler: () -> Boolean): View {
     setOnLongClickListener() {
         clickHandler()
     }
@@ -27,7 +27,7 @@ public fun View.onLongClick(inline clickHandler: () -> Boolean): View {
 /**
  * Set handler for touch
  */
-public fun View.onTouchListener(inline touchHandler: (event: MotionEvent) -> Boolean): View {
+public fun View.onTouchListener(touchHandler: (event: MotionEvent) -> Boolean): View {
     setOnTouchListener() { v: View, event: MotionEvent ->
         touchHandler(event)
     }
@@ -38,7 +38,7 @@ public fun View.onTouchListener(inline touchHandler: (event: MotionEvent) -> Boo
 /**
  * Set handler for motion
  */
-public fun View.onGenericMotionListener(inline motionHandler: (event: MotionEvent) -> Boolean): View {
+public fun View.onGenericMotionListener(motionHandler: (event: MotionEvent) -> Boolean): View {
     setOnGenericMotionListener() { view: View, event: MotionEvent ->
         motionHandler(event)
     }
@@ -57,13 +57,13 @@ public fun View.setVisibility(isVisible: Boolean): View {
 /**
  * Set/get visibility state of view
  */
-val View.isVisible: Boolean
+public inline val View.isVisible: Boolean
     get() = getVisibility() == View.VISIBLE
 
 /**
  * Post task for delayed execution on main thread
  */
-public fun View.postDelayed(timeout: Number, inline action: (view: View) -> Unit): View {
+public fun View.postDelayed(timeout: Number, action: (view: View) -> Unit): View {
     postDelayed({
         action(this)
     }, timeout.toLong())

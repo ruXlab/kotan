@@ -25,7 +25,7 @@ abstract class Broadcast<T: Serializable>() {
         }
     }
 
-    @suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST")
     fun transform(i: Intent): T = i.getSerializableExtra(keyName) as T
 
     protected  val keyName: String = javaClass.getSimpleName()

@@ -10,7 +10,7 @@ import android.widget.AdapterView.OnItemClickListener
 /**
  * Add item click listener which accepts params: entity and position
  */
-public inline fun AbsListView.onItemClick<reified T>(@inlineOptions(InlineOption.ONLY_LOCAL_RETURN) action: (T, Int) -> Unit): AbsListView {
+public inline fun AbsListView.onItemClick<reified T>(crossinline action: (T, Int) -> Unit): AbsListView {
     setOnItemClickListener(object: OnItemClickListener {
         override fun onItemClick(parent: AdapterView<out Adapter?>, view: View?, position: Int, id: Long) {
             action(parent?.getAdapter()?.getItem(position) as T, position)
@@ -23,7 +23,7 @@ public inline fun AbsListView.onItemClick<reified T>(@inlineOptions(InlineOption
 /**
  * Add item click listener which accepts entity as generic
  */
-public inline fun AbsListView.onItemClick<reified T>(@inlineOptions(InlineOption.ONLY_LOCAL_RETURN) action: (T) -> Unit): AbsListView {
+public inline fun AbsListView.onItemClick<reified T>(crossinline action: (T) -> Unit): AbsListView {
     setOnItemClickListener(object: OnItemClickListener {
         override fun onItemClick(parent: AdapterView<out Adapter?>, view: View?, position: Int, id: Long) {
             action.invoke(parent.getAdapter()?.getItem(position) as T)
@@ -36,7 +36,7 @@ public inline fun AbsListView.onItemClick<reified T>(@inlineOptions(InlineOption
 /**
  * Add item click listener which accepts entity as generic
  */
-public inline fun AbsListView.onLongItemClick<reified T>(@inlineOptions(InlineOption.ONLY_LOCAL_RETURN) action: (T) -> Unit): AbsListView {
+public inline fun AbsListView.onLongItemClick<reified T>(crossinline action: (T) -> Unit): AbsListView {
     setOnItemLongClickListener(object: AdapterView.OnItemLongClickListener {
         override fun onItemLongClick(parent: AdapterView<*>, view: View?, position: Int, id: Long): Boolean {
             action.invoke(parent.getAdapter()?.getItem(position) as T)
