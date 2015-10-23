@@ -65,6 +65,7 @@ fun Cursor.mapAll<T>(f: (record: Cursor) -> T): List<T> =
     else ArrayList<T>(0)
 
 /**
+ *
  * Resets cursor to the start and map each entry and close it afterwards
  */
 fun Cursor.mapAllAndClose<T>(f: (record: Cursor) -> T): List<T> {

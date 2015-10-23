@@ -39,5 +39,18 @@ fun SQLiteDatabase.queryAndMap<T>(
 ) = queryCursor(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit)
         .mapAllAndClose(mapper)
 
+fun SQLiteDatabase.queryFirstAndMap<T>(
+        table: String? = null,
+        columns: Array<String>? = null,
+        selection: String? = null,
+        selectionArgs: Array<String>? = null,
+        groupBy: String? = null,
+        having: String? = null,
+        orderBy: String? = null,
+        limit: String? = null,
+        default: T,
+        mapper: (c: Cursor) -> T
+) = queryCursor(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit)
+    .mapFirstRowAndClose(default, mapper)
 
 
