@@ -11,9 +11,9 @@ import kotlin.properties.Delegates
  */
 public open class Preferences (
         val context: Context,
-        val prefName: String = context.javaClass.getCanonicalName()
+        val prefName: String = context.javaClass.canonicalName
 ) {
-    protected val prefs: SharedPreferences by Delegates.lazy { context.getSharedPreferences(prefName, 0) }
+    protected val prefs: SharedPreferences by lazy(LazyThreadSafetyMode.NONE) { context.getSharedPreferences(prefName, 0) }
 
     protected fun edit(cb: (editor: SharedPreferences.Editor) -> Unit): Unit {
         val editor = prefs.edit()

@@ -41,3 +41,11 @@ abstract class ExtendedBroadcastReceiver(
         catch (ignore: Exception) { /* any better suggestions? */ }
 }
 
+
+fun Activity.registerReceivers(vararg receivers: ExtendedBroadcastReceiver) {
+    for (receiver in receivers) receiver.register(this)
+}
+
+fun Activity.unregisterReceivers(vararg receivers: ExtendedBroadcastReceiver) {
+    for (receiver in receivers) receiver.unregister(this)
+}
