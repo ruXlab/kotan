@@ -57,7 +57,7 @@ public fun View.setVisibility(isVisible: Boolean): View {
 /**
  * Set/get visibility state of view
  */
-public inline val View.isVisible: Boolean
+public val View.isVisible: Boolean
     get() = getVisibility() == View.VISIBLE
 
 /**
@@ -73,6 +73,6 @@ public fun View.postDelayed(timeout: Number, action: (view: View) -> Unit): View
 /**
  * Find view in the tree by id
  */
-public inline fun View.findView<reified T: View?>(id: Int): T {
+public inline fun <reified T: View?> View.findView(id: Int): T {
     return findViewById(id) as T
 }

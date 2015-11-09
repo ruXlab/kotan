@@ -5,15 +5,16 @@ import android.view.View
 import kotlin.properties.ReadOnlyProperty
 import android.app.DialogFragment
 import kotlin.properties.Delegates
+import kotlin.reflect.KProperty
 
-public inline fun Fragment.findView<reified T : View?>(id: Int): T {
+public inline fun <reified T : View?> Fragment.findView(id: Int): T {
     return getView().findView<T>(id)
 }
 
 class FragmentLazyView<T : View>(private val viewId: Int) : ReadOnlyProperty<Fragment, T> {
     private var value by Delegates.notNull<T>()
 
-    override fun get(thisRef: Fragment, desc: PropertyMetadata): T {
+    override fun getValue(thisRef: Fragment, desc: KProperty<*>): T {
         if (value == null)
             value = thisRef.getView().findViewById(viewId) as T
         return value

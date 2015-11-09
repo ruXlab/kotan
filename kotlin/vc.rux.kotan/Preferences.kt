@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import java.sql.Date
 import kotlin.properties.ReadWriteProperty
 import kotlin.properties.Delegates
+import kotlin.reflect.KProperty
 
 /**
  * Wraps SharedPreferences interface to make it more handsome
@@ -22,63 +23,63 @@ public open class Preferences (
     }
 
     inner abstract class AbstractValue<T>(val defaultValue: T, val name: String?): ReadWriteProperty<Preferences, T> {
-        protected fun detectName(propertyMetadata: PropertyMetadata): String
+        protected fun detectName(propertyMetadata: KProperty<*>): String
                 = name ?: propertyMetadata.name
 
     }
 
 
     inner class BooleanValue(defaultValue: Boolean, name: String? = null): AbstractValue<Boolean>(defaultValue, name) {
-        override fun get(thisRef: Preferences, desc: PropertyMetadata): Boolean =
+        override fun getValue(thisRef: Preferences, desc: KProperty<*>): Boolean =
                 thisRef.prefs.getBoolean(detectName(desc), defaultValue)
 
 
-        override fun set(thisRef: Preferences, desc: PropertyMetadata, value: Boolean) =
+        override fun setValue(thisRef: Preferences, desc: KProperty<*>, value: Boolean) =
                 thisRef.edit { editor -> editor.putBoolean(detectName(desc), value) }
     }
 
 
     inner class IntValue(defaultValue: Int, name: String? = null): AbstractValue<Int>(defaultValue, name) {
-        override fun get(thisRef: Preferences, desc: PropertyMetadata): Int =
+        override fun getValue(thisRef: Preferences, desc: KProperty<*>): Int =
                 thisRef.prefs.getInt(detectName(desc), defaultValue)
 
 
-        override fun set(thisRef: Preferences, desc: PropertyMetadata, value: Int) =
+        override fun setValue(thisRef: Preferences, desc: KProperty<*>, value: Int) =
                 thisRef.edit { editor -> editor.putInt(detectName(desc), value) }
     }
 
     inner class LongValue(defaultValue: Long, name: String? = null): AbstractValue<Long>(defaultValue, name) {
-        override fun get(thisRef: Preferences, desc: PropertyMetadata): Long =
+        override fun getValue(thisRef: Preferences, desc: KProperty<*>): Long =
                 thisRef.prefs.getLong(detectName(desc), defaultValue)
 
 
-        override fun set(thisRef: Preferences, desc: PropertyMetadata, value: Long) =
+        override fun setValue(thisRef: Preferences, desc: KProperty<*>, value: Long) =
                 thisRef.edit { editor -> editor.putLong(detectName(desc), value) }
     }
 
     inner class FloatValue(defaultValue: Float, name: String? = null): AbstractValue<Float>(defaultValue, name) {
-        override fun get(thisRef: Preferences, desc: PropertyMetadata): Float =
+        override fun getValue(thisRef: Preferences, desc: KProperty<*>): Float =
                 thisRef.prefs.getFloat(detectName(desc), defaultValue)
 
 
-        override fun set(thisRef: Preferences, desc: PropertyMetadata, value: Float) =
+        override fun setValue(thisRef: Preferences, desc: KProperty<*>, value: Float) =
                 thisRef.edit { editor -> editor.putFloat(detectName(desc), value) }
     }
 
     inner class StringValue(defaultValue: String, name: String? = null): AbstractValue<String>(defaultValue, name) {
-        override fun get(thisRef: Preferences, desc: PropertyMetadata): String =
+        override fun getValue(thisRef: Preferences, desc: KProperty<*>): String =
                 thisRef.prefs.getString(detectName(desc), defaultValue)
 
 
-        override fun set(thisRef: Preferences, desc: PropertyMetadata, value: String) =
+        override fun setValue(thisRef: Preferences, desc: KProperty<*>, value: String) =
                 thisRef.edit { editor -> editor.putString(detectName(desc), value) }
     }
 
     inner class DateValue(defaultValue: Date, name: String? = null): AbstractValue<Date>(defaultValue, name) {
-        override fun get(thisRef: Preferences, desc: PropertyMetadata): Date =
+        override fun getValue(thisRef: Preferences, desc: KProperty<*>): Date =
                 Date(thisRef.prefs.getLong(detectName(desc), defaultValue.getTime()))
 
-        override fun set(thisRef: Preferences, desc: PropertyMetadata, value: Date) =
+        override fun setValue(thisRef: Preferences, desc: KProperty<*>, value: Date) =
                 thisRef.edit { editor -> editor.putLong(detectName(desc), value.getTime()) }
 
     }

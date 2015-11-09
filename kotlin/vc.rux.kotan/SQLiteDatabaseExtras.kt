@@ -3,7 +3,7 @@ package vc.rux.kotan
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 
-fun SQLiteDatabase.transaction<T>(f: (SQLiteDatabase) -> T): T {
+fun <T> SQLiteDatabase.transaction(f: (SQLiteDatabase) -> T): T {
     beginTransaction()
     var result: T
     try {
@@ -26,7 +26,7 @@ fun SQLiteDatabase.queryCursor(
         limit: String? = null
 ) = query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit)
 
-fun SQLiteDatabase.queryAndMap<T>(
+fun <T> SQLiteDatabase.queryAndMap(
         table: String? = null,
         columns: Array<String>? = null,
         selection: String? = null,
@@ -39,7 +39,7 @@ fun SQLiteDatabase.queryAndMap<T>(
 ) = queryCursor(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit)
         .mapAllAndClose(mapper)
 
-fun SQLiteDatabase.queryFirstAndMap<T>(
+fun <T> SQLiteDatabase.queryFirstAndMap(
         table: String? = null,
         columns: Array<String>? = null,
         selection: String? = null,

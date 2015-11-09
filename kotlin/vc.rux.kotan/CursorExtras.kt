@@ -49,7 +49,7 @@ fun Cursor.getShort(columnName: String, default: ByteArray?) =
 /**
  * Pass remaining cursor entities via mapper function
  */
-fun Cursor.mapFromCurrent<T>(f: (record: Cursor) -> T): List<T> {
+fun <T> Cursor.mapFromCurrent(f: (record: Cursor) -> T): List<T> {
     val result = ArrayList<T>()
     do {
         result.add(f(this))
@@ -60,7 +60,7 @@ fun Cursor.mapFromCurrent<T>(f: (record: Cursor) -> T): List<T> {
 /**
  * Resets cursor to the start and map each entry
  */
-fun Cursor.mapAll<T>(f: (record: Cursor) -> T): List<T> =
+fun <T> Cursor.mapAll(f: (record: Cursor) -> T): List<T> =
     if (moveToFirst()) mapFromCurrent(f)
     else ArrayList<T>(0)
 
@@ -68,13 +68,13 @@ fun Cursor.mapAll<T>(f: (record: Cursor) -> T): List<T> =
  *
  * Resets cursor to the start and map each entry and close it afterwards
  */
-fun Cursor.mapAllAndClose<T>(f: (record: Cursor) -> T): List<T> {
+fun <T> Cursor.mapAllAndClose(f: (record: Cursor) -> T): List<T> {
     val result = mapAll(f)
     close()
     return result
 }
 
-fun Cursor.mapFirstRowAndClose<T>(default: T, mapper: (record: Cursor) -> T): T {
+fun <T> Cursor.mapFirstRowAndClose(default: T, mapper: (record: Cursor) -> T): T {
     var result: T = default
     try {
         if (moveToFirst()) result = mapper(this)

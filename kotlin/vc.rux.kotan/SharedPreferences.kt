@@ -10,7 +10,7 @@ import kotlin.properties.ReadWriteProperty
  * (obsolete way)
  */
 
-public fun Context.loadPref<T>(key: String, default: T): T {
+public fun <T> Context.loadPref(key: String, default: T): T {
     val sp = getSharedPreferences(javaClass.getCanonicalName(), 0)
     return when (default) {
         is Int -> sp.getInt(key, default)
@@ -22,7 +22,7 @@ public fun Context.loadPref<T>(key: String, default: T): T {
     } as T
 }
 
-public fun Context.savePref<T>(key: String, value: T) {
+public fun <T> Context.savePref(key: String, value: T) {
     val sp = getSharedPreferences(javaClass.getCanonicalName(), 0).edit()
     when (value) {
         is Int -> sp.putInt(key, value)
@@ -35,7 +35,7 @@ public fun Context.savePref<T>(key: String, value: T) {
     sp.commit()
 }
 
-public fun SharedPreferences.edit(noinline action: (editor: SharedPreferences.Editor) -> Unit) {
+public fun SharedPreferences.edit(action: (editor: SharedPreferences.Editor) -> Unit) {
     val sp = edit()
     action(sp)
     sp.commit()
