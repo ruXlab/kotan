@@ -3,6 +3,7 @@ package vc.rux.kotan
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.Animation
 
 /**
  * Set handler for click
@@ -57,8 +58,11 @@ public fun View.setVisibility(isVisible: Boolean): View {
 /**
  * Set/get visibility state of view
  */
-public val View.isVisible: Boolean
-    get() = getVisibility() == View.VISIBLE
+public var View.isVisible: Boolean
+    get() = visibility == View.VISIBLE
+    set(isVisible) {
+        visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
 
 /**
  * Post task for delayed execution on main thread
