@@ -10,7 +10,7 @@ import kotlin.reflect.KProperty
 /**
  * Helper class, implements findView for different types of UI object
  */
-private abstract class FindViewBase<T: View>(private val viewId: Int) : ReadOnlyProperty<Any, T> {
+abstract class FindViewBase<T: View>(private val viewId: Int) : ReadOnlyProperty<Any, T> {
     protected fun findById(thisRef: Any): T =
         if (thisRef is Activity)
             thisRef.findViewById(viewId) as T

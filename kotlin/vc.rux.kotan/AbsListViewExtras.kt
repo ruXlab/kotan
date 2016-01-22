@@ -10,7 +10,7 @@ import android.widget.AdapterView.OnItemClickListener
 /**
  * Add item click listener which accepts params: entity and position
  */
-public inline fun AbsListView.onItemClick<reified T>(crossinline action: (T, Int) -> Unit): AbsListView {
+public inline fun <reified T> AbsListView.onItemClick(crossinline action: (T, Int) -> Unit): AbsListView {
     onItemClickListener = object: OnItemClickListener {
         override fun onItemClick(parent: AdapterView<out Adapter?>, view: View?, position: Int, id: Long) {
             action(parent?.adapter?.getItem(position) as T, position)
@@ -23,11 +23,9 @@ public inline fun AbsListView.onItemClick<reified T>(crossinline action: (T, Int
 /**
  * Add item click listener which accepts entity as generic
  */
-public inline fun AbsListView.onItemClick<reified T>(crossinline action: (T) -> Unit): AbsListView {
-    onItemClickListener = object: OnItemClickListener {
-        override fun onItemClick(parent: AdapterView<out Adapter?>, view: View?, position: Int, id: Long) {
-            action.invoke(parent.adapter?.getItem(position) as T)
-        }
+public inline fun <reified T> AbsListView.onItemClick(crossinline action: (T) -> Unit): AbsListView {
+    onItemClickListener = OnItemClickListener { parent, view, position, id ->
+        action.invoke(parent.adapter?.getItem(position) as T)
     }
     return this
 }
@@ -36,12 +34,10 @@ public inline fun AbsListView.onItemClick<reified T>(crossinline action: (T) -> 
 /**
  * Add item click listener which accepts entity as generic
  */
-public inline fun AbsListView.onLongItemClick<reified T>(crossinline action: (T) -> Unit): AbsListView {
-    setOnItemLongClickListener(object: AdapterView.OnItemLongClickListener {
-        override fun onItemLongClick(parent: AdapterView<*>, view: View?, position: Int, id: Long): Boolean {
-            action.invoke(parent.getAdapter()?.getItem(position) as T)
-            return true
-        }
+public inline fun <reified T> AbsListView.onLongItemClick(crossinline action: (T) -> Unit): AbsListView {
+    setOnItemLongClickListener({ parent, view, position, id ->
+        action.invoke(parent.getAdapter()?.getItem(position) as T)
+        true
     })
     return this
 }
