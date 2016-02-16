@@ -11,10 +11,8 @@ import android.widget.AdapterView.OnItemClickListener
  * Add item click listener which accepts params: entity and position
  */
 public inline fun <reified T> AbsListView.onItemClick(crossinline action: (T, Int) -> Unit): AbsListView {
-    onItemClickListener = object: OnItemClickListener {
-        override fun onItemClick(parent: AdapterView<out Adapter?>, view: View?, position: Int, id: Long) {
-            action(parent?.adapter?.getItem(position) as T, position)
-        }
+    onItemClickListener = OnItemClickListener { parent, view, position, id ->
+        action(parent.adapter.getItem(position) as T, position)
     }
     return this
 }
@@ -25,7 +23,7 @@ public inline fun <reified T> AbsListView.onItemClick(crossinline action: (T, In
  */
 public inline fun <reified T> AbsListView.onItemClick(crossinline action: (T) -> Unit): AbsListView {
     onItemClickListener = OnItemClickListener { parent, view, position, id ->
-        action.invoke(parent.adapter?.getItem(position) as T)
+        action.invoke(parent.adapter.getItem(position) as T)
     }
     return this
 }
@@ -36,7 +34,7 @@ public inline fun <reified T> AbsListView.onItemClick(crossinline action: (T) ->
  */
 public inline fun <reified T> AbsListView.onLongItemClick(crossinline action: (T) -> Unit): AbsListView {
     setOnItemLongClickListener({ parent, view, position, id ->
-        action.invoke(parent.getAdapter()?.getItem(position) as T)
+        action.invoke(parent.adapter.getItem(position) as T)
         true
     })
     return this

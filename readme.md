@@ -79,12 +79,10 @@ as we work with variables
   any ```Context``` reference and name of preferences
     ```kotlin
     class Configuration(context: Context): Preferences(context, "cfg") {
-        var sheepCounter by super.IntValue(0)
-        var myName by super.StringValue("moo")
+        var sheepCounter by IntValue(0)
+        var myName by StringValue("moo")
     }
     ```
-
-  At the moment due bug in [kotlin (KT-6727)](https://youtrack.jetbrains.com/issue/KT-6727#comment=27-935290) you have to insert ```super.``` before name of delegate(which declared in ```Preferences```)
 
   Currently available: ```StringValue```, ```IntValue```, ```LongValue```, ```FloatValue```
 
