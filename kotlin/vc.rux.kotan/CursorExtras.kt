@@ -83,7 +83,37 @@ fun <T> Cursor.mapFirstRowAndClose(default: T, mapper: (record: Cursor) -> T): T
     }
     return result
 }
+fun Cursor.mapFirstShortAndClose() =
+        mapFirstRowAndClose(null) { it.getShort(0) }
+fun Cursor.mapFirstShortAndClose(default: Short) =
+        mapFirstRowAndClose(default) { it.getShort(0) }
 
-fun Cursor.mapFirstIntAndClose(default: Int? = null) =
+
+fun Cursor.mapFirstIntAndClose() =
+    mapFirstRowAndClose(null) { it.getInt(0) }
+fun Cursor.mapFirstIntAndClose(default: Int) =
     mapFirstRowAndClose(default) { it.getInt(0) }
 
+
+fun Cursor.mapFirstLongAndClose() =
+    mapFirstRowAndClose(null) { it.getLong(0) }
+fun Cursor.mapFirstLongAndClose(default: Long) =
+    mapFirstRowAndClose(default) { it.getLong(0) }
+
+
+fun Cursor.mapFirstFloatAndClose() =
+    mapFirstRowAndClose(null) { it.getFloat(0) }
+fun Cursor.mapFirstFloatAndClose(default: Float) =
+    mapFirstRowAndClose(default) { it.getFloat(0) }
+
+
+fun Cursor.mapFirstDoubleAndClose() =
+    mapFirstRowAndClose(null) { it.getDouble(0) }
+fun Cursor.mapFirstDoubleAndClose(default: String) =
+    mapFirstRowAndClose(default) { it.getDouble(0) }
+
+
+fun Cursor.mapFirstStringAndClose() =
+        mapFirstRowAndClose(null) { it.getString(0) }
+fun Cursor.mapFirstStringAndClose(default: String) =
+        mapFirstRowAndClose(default) { it.getString(0) }
