@@ -2,20 +2,20 @@ package vc.rux.kotan
 
 import android.view.animation.Animation
 
-public class AnimationListenerAdapter: Animation.AnimationListener {
+class AnimationListenerAdapter: Animation.AnimationListener {
     private var onRepeat = {}
     private var onEnd = {}
     private var onStart = {}
 
-    public fun onRepeat(f: () -> Unit) {
+    fun onRepeat(f: () -> Unit) {
         onRepeat = f
     }
 
-    public fun onEnd(f: () -> Unit) {
+    fun onEnd(f: () -> Unit) {
         onEnd = f
     }
 
-    public fun onStart(f: () -> Unit) {
+    fun onStart(f: () -> Unit) {
         onStart = f
     }
 
