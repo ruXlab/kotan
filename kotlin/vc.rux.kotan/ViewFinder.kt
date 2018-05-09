@@ -10,12 +10,12 @@ import kotlin.reflect.KProperty
 /**
  * Helper class, implements findView for different types of UI object
  */
-abstract class FindViewBase<T: View>(private val viewId: Int) : ReadOnlyProperty<Any, T> {
+abstract class FindViewBase<out T: View>(private val viewId: Int) : ReadOnlyProperty<Any, T> {
     protected fun findById(thisRef: Any): T =
         if (thisRef is Activity)
             thisRef.findViewById(viewId) as T
         else if (thisRef is Fragment)
-            thisRef?.getView()?.findViewById(viewId) as T
+            thisRef.view.findViewById(viewId) as T
         else if (thisRef is View)
             thisRef.findViewById(viewId) as T
         else throw IllegalArgumentException("Delegate can't be attached to this object")
@@ -38,11 +38,11 @@ public class LazyView<T: View>(private val viewId: Int) : FindViewBase<T>(viewId
 /**
  * Lazy implementation of findView. Will be evaluated on first access
  */
-class LazyViewCustomParent<T: Any>(val viewId: Int, val parentView: View): ReadOnlyProperty<Any, T> {
+class LazyViewCustomParent<out T: View>(val viewId: Int, val parentView: View): ReadOnlyProperty<Any, T> {
     private var value: T? = null
 
     override fun getValue(thisRef: Any, desc: KProperty<*>): T { Delegates
-        if (value == null) value = parentView.findViewById(viewId) as T
+        if (value == null) value = parentView.findViewById<T>(viewId)
         return value!!
     }
 }
