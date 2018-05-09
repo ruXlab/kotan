@@ -1,9 +1,7 @@
 package vc.rux.kotan
 
-import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.Animation
 
 /**
  * Set handler for click
@@ -51,7 +49,7 @@ public fun View.onGenericMotionListener(motionHandler: (event: MotionEvent) -> B
  * Set view visibility state: visible or gone
  */
 public fun View.setVisibility(isVisible: Boolean): View {
-    setVisibility(if(isVisible) View.VISIBLE else View.GONE)
+    visibility = if(isVisible) View.VISIBLE else View.GONE
     return this
 }
 
@@ -78,5 +76,5 @@ public fun View.postDelayed(timeout: Number, action: (view: View) -> Unit): View
  * Find view in the tree by id
  */
 public inline fun <reified T: View?> View.findView(id: Int): T {
-    return findViewById(id) as T
+    return findViewById<T>(id) as T
 }
