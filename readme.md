@@ -1,10 +1,33 @@
 kotan library
 ==========================
 
-Easy koding for android using kotlin language
+[![](https://jitpack.io/v/ruXlab/kotan.svg)](https://jitpack.io/#ruXlab/kotan)
 
-Currently author uses it only in his own projects and it's definitely not even alpha stage but any contributions, ideas
- and requests are welcome.
+Easy koding for Android with kotlin language
+
+Currently author uses it only in his own projects. But any contributions, ideas and requests are welcome.
+
+Integration
+-------------
+
+Thanks to JitPack it's easy to include kotan dependency to your project
+
+Add following lines to your gradle build file:
+
+```groovy
+
+repositories {
+    . . . .
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    . . . .
+    implementation 'com.github.ruXlab:kotan:-SNAPSHOT'
+}
+
+```
+
 
 Find view
 ----------------------------
@@ -53,18 +76,9 @@ List item click handler:
 
 ```kotlin
     list.onItemClick<Fruit> { fruit ->
-        // process choosed fruit
+        // process chosen fruit
     }
 ```
-
-
-
-View manipulation
-------------------------------
-
-// TODO
-
-
 
 
 
@@ -145,28 +159,10 @@ Kotan will help you to use in very easy way
     ```
 
 
-Installation
-----------------
+View manipulation
+------------------------------
 
-* At the moment you can include **kotan** library into your project as submodule in your project
-    
-        git submodule add https://github.com/ruXlab/kotan kotan
+// TODO
 
 
-* Also you have to add dependency in ```gradle.build```
-  ```gradle
-    android {
-        dependencies {
-            . . .
-            compile project(":kotan")
-        }
-    }
-  ```
-* And into ```settings.build```
-  ```gradle
-  include ':kotan'
-  ```
-    
-* Final step - import into your namespace
-    
-        import vc.rux.kotan.*
+
