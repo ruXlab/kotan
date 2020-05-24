@@ -6,8 +6,8 @@ import android.view.View
 /**
  * Set handler for click
  */
-public fun View.onClick(clickHandler: () -> Unit): View {
-    setOnClickListener() {
+fun View.onClick(clickHandler: () -> Unit): View {
+    setOnClickListener {
         clickHandler()
     }
     return this
@@ -16,8 +16,8 @@ public fun View.onClick(clickHandler: () -> Unit): View {
 /**
  * Set handler for long click
  */
-public fun View.onLongClick(clickHandler: () -> Boolean): View {
-    setOnLongClickListener() {
+fun View.onLongClick(clickHandler: () -> Boolean): View {
+    setOnLongClickListener {
         clickHandler()
     }
     return this
@@ -26,8 +26,8 @@ public fun View.onLongClick(clickHandler: () -> Boolean): View {
 /**
  * Set handler for touch
  */
-public fun View.onTouchListener(touchHandler: (event: MotionEvent) -> Boolean): View {
-    setOnTouchListener() { v: View, event: MotionEvent ->
+fun View.onTouchListener(touchHandler: (event: MotionEvent) -> Boolean): View {
+    setOnTouchListener { v: View, event: MotionEvent ->
         touchHandler(event)
     }
     return this
@@ -37,8 +37,8 @@ public fun View.onTouchListener(touchHandler: (event: MotionEvent) -> Boolean): 
 /**
  * Set handler for motion
  */
-public fun View.onGenericMotionListener(motionHandler: (event: MotionEvent) -> Boolean): View {
-    setOnGenericMotionListener() { view: View, event: MotionEvent ->
+fun View.onGenericMotionListener(motionHandler: (event: MotionEvent) -> Boolean): View {
+    setOnGenericMotionListener { view: View, event: MotionEvent ->
         motionHandler(event)
     }
     return this
@@ -48,7 +48,7 @@ public fun View.onGenericMotionListener(motionHandler: (event: MotionEvent) -> B
 /**
  * Set view visibility state: visible or gone
  */
-public fun View.setVisibility(isVisible: Boolean): View {
+fun View.setVisibility(isVisible: Boolean): View {
     visibility = if(isVisible) View.VISIBLE else View.GONE
     return this
 }
@@ -56,7 +56,7 @@ public fun View.setVisibility(isVisible: Boolean): View {
 /**
  * Set/get visibility state of view
  */
-public var View.isVisible: Boolean
+var View.isVisible: Boolean
     get() = visibility == View.VISIBLE
     set(isVisible) {
         visibility = if (isVisible) View.VISIBLE else View.GONE
@@ -65,7 +65,7 @@ public var View.isVisible: Boolean
 /**
  * Post task for delayed execution on main thread
  */
-public fun View.postDelayed(timeout: Number, action: (view: View) -> Unit): View {
+fun View.postDelayed(timeout: Number, action: (view: View) -> Unit): View {
     postDelayed({
         action(this)
     }, timeout.toLong())
@@ -75,6 +75,6 @@ public fun View.postDelayed(timeout: Number, action: (view: View) -> Unit): View
 /**
  * Find view in the tree by id
  */
-public inline fun <reified T: View?> View.findView(id: Int): T {
+inline fun <reified T: View?> View.findView(id: Int): T {
     return findViewById<T>(id) as T
 }

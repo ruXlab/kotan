@@ -1,24 +1,22 @@
 package vc.rux.kotan
 
-import kotlin.properties.ReadOnlyProperty
 import android.app.Activity
 import android.app.Fragment
 import android.view.View
-import kotlin.properties.Delegates
+import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 /**
  * Helper class, implements findView for different types of UI object
  */
-abstract class FindViewBase<out T: View>(private val viewId: Int) : ReadOnlyProperty<Any, T> {
+abstract class FindViewBase<out T : View>(private val viewId: Int) : ReadOnlyProperty<Any, T> {
     protected fun findById(thisRef: Any): T =
-        if (thisRef is Activity)
-            thisRef.findViewById(viewId) as T
-        else if (thisRef is Fragment)
-            thisRef.view.findViewById(viewId) as T
-        else if (thisRef is View)
-            thisRef.findViewById(viewId) as T
-        else throw IllegalArgumentException("Delegate can't be attached to this object")
+            when (thisRef) {
+                is Activity -> thisRef.findViewById(viewId) as T
+                is Fragment -> thisRef.view.findViewById(viewId) as T
+                is View -> thisRef.findViewById(viewId) as T
+                else -> throw IllegalArgumentException("Delegate can't be attached to this object")
+            }
 
 }
 
@@ -26,7 +24,7 @@ abstract class FindViewBase<out T: View>(private val viewId: Int) : ReadOnlyProp
 /**
  * Lazy implementation of findView. Will be evaluated on first access
  */
-public class LazyView<T: View>(private val viewId: Int) : FindViewBase<T>(viewId) {
+class LazyView<T : View>(private val viewId: Int) : FindViewBase<T>(viewId) {
     private var value: T? = null
 
     override fun getValue(thisRef: Any, desc: KProperty<*>): T {
@@ -38,10 +36,10 @@ public class LazyView<T: View>(private val viewId: Int) : FindViewBase<T>(viewId
 /**
  * Lazy implementation of findView. Will be evaluated on first access
  */
-class LazyViewCustomParent<out T: View>(val viewId: Int, val parentView: View): ReadOnlyProperty<Any, T> {
+class LazyViewCustomParent<out T : View>(val viewId: Int, val parentView: View) : ReadOnlyProperty<Any, T> {
     private var value: T? = null
 
-    override fun getValue(thisRef: Any, desc: KProperty<*>): T { Delegates
+    override fun getValue(thisRef: Any, desc: KProperty<*>): T {
         if (value == null) value = parentView.findViewById<T>(viewId)
         return value!!
     }

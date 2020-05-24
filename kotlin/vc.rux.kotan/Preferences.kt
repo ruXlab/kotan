@@ -4,15 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import java.sql.Date
 import kotlin.properties.ReadWriteProperty
-import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
 /**
  * Wraps SharedPreferences interface to make it more handsome
  */
-public open class Preferences (
+open class Preferences(
         val context: Context,
-        val prefName: String = context.javaClass.canonicalName
+        val prefName: String = context.javaClass.let { it.canonicalName ?: it.simpleName }
 ) {
     protected val prefs: SharedPreferences by lazy(LazyThreadSafetyMode.NONE) { context.getSharedPreferences(prefName, 0) }
 
@@ -22,14 +21,14 @@ public open class Preferences (
         editor.commit()
     }
 
-    inner abstract class AbstractValue<T>(val defaultValue: T, val name: String?): ReadWriteProperty<Preferences, T> {
-        protected fun detectName(propertyMetadata: KProperty<*>): String
-                = name ?: propertyMetadata.name
+    abstract inner class AbstractValue<T>(val defaultValue: T, val name: String?) : ReadWriteProperty<Preferences, T> {
+        protected fun detectName(propertyMetadata: KProperty<*>): String = name
+                ?: propertyMetadata.name
 
     }
 
 
-    inner class BooleanValue(defaultValue: Boolean, name: String? = null): AbstractValue<Boolean>(defaultValue, name) {
+    inner class BooleanValue(defaultValue: Boolean, name: String? = null) : AbstractValue<Boolean>(defaultValue, name) {
         override fun getValue(thisRef: Preferences, desc: KProperty<*>): Boolean =
                 thisRef.prefs.getBoolean(detectName(desc), defaultValue)
 
@@ -39,7 +38,7 @@ public open class Preferences (
     }
 
 
-    inner class IntValue(defaultValue: Int, name: String? = null): AbstractValue<Int>(defaultValue, name) {
+    inner class IntValue(defaultValue: Int, name: String? = null) : AbstractValue<Int>(defaultValue, name) {
         override fun getValue(thisRef: Preferences, desc: KProperty<*>): Int =
                 thisRef.prefs.getInt(detectName(desc), defaultValue)
 
@@ -48,7 +47,7 @@ public open class Preferences (
                 thisRef.edit { editor -> editor.putInt(detectName(desc), value) }
     }
 
-    inner class LongValue(defaultValue: Long, name: String? = null): AbstractValue<Long>(defaultValue, name) {
+    inner class LongValue(defaultValue: Long, name: String? = null) : AbstractValue<Long>(defaultValue, name) {
         override fun getValue(thisRef: Preferences, desc: KProperty<*>): Long =
                 thisRef.prefs.getLong(detectName(desc), defaultValue)
 
@@ -57,7 +56,7 @@ public open class Preferences (
                 thisRef.edit { editor -> editor.putLong(detectName(desc), value) }
     }
 
-    inner class FloatValue(defaultValue: Float, name: String? = null): AbstractValue<Float>(defaultValue, name) {
+    inner class FloatValue(defaultValue: Float, name: String? = null) : AbstractValue<Float>(defaultValue, name) {
         override fun getValue(thisRef: Preferences, desc: KProperty<*>): Float =
                 thisRef.prefs.getFloat(detectName(desc), defaultValue)
 
@@ -66,7 +65,7 @@ public open class Preferences (
                 thisRef.edit { editor -> editor.putFloat(detectName(desc), value) }
     }
 
-    inner class StringValue(defaultValue: String, name: String? = null): AbstractValue<String>(defaultValue, name) {
+    inner class StringValue(defaultValue: String, name: String? = null) : AbstractValue<String>(defaultValue, name) {
         override fun getValue(thisRef: Preferences, desc: KProperty<*>): String =
                 thisRef.prefs.getString(detectName(desc), defaultValue)
 
@@ -75,7 +74,7 @@ public open class Preferences (
                 thisRef.edit { editor -> editor.putString(detectName(desc), value) }
     }
 
-    inner class DateValue(defaultValue: Date, name: String? = null): AbstractValue<Date>(defaultValue, name) {
+    inner class DateValue(defaultValue: Date, name: String? = null) : AbstractValue<Date>(defaultValue, name) {
         override fun getValue(thisRef: Preferences, desc: KProperty<*>): Date =
                 Date(thisRef.prefs.getLong(detectName(desc), defaultValue.getTime()))
 

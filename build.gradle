@@ -7,14 +7,12 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$vGradleBuild"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$vKotlin"
-        classpath "com.github.dcendents:android-maven-gradle-plugin:$vAndroidMaven"
     }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'idea'
-//apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.ruxlab'
 
@@ -32,8 +30,10 @@ dependencies {
 
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
+    defaultConfig {
+        minSdkVersion 15
+    }
 
     sourceSets {
         main {
@@ -46,9 +46,4 @@ android {
     }
 }
 
-
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.5'
-}
 

@@ -2,15 +2,13 @@ package vc.rux.kotan
 
 import android.content.Context
 import android.content.SharedPreferences
-import kotlin.properties.Delegates
-import kotlin.properties.ReadWriteProperty
 
 /**
  * Shared preferences helper
  * (obsolete way)
  */
 
-public fun <T> Context.loadPref(key: String, default: T): T {
+fun <T> Context.loadPref(key: String, default: T): T {
     val sp = getSharedPreferences(javaClass.getCanonicalName(), 0)
     return when (default) {
         is Int -> sp.getInt(key, default)
@@ -22,7 +20,7 @@ public fun <T> Context.loadPref(key: String, default: T): T {
     } as T
 }
 
-public fun <T> Context.savePref(key: String, value: T) {
+fun <T> Context.savePref(key: String, value: T) {
     val sp = getSharedPreferences(javaClass.getCanonicalName(), 0).edit()
     when (value) {
         is Int -> sp.putInt(key, value)
@@ -35,7 +33,7 @@ public fun <T> Context.savePref(key: String, value: T) {
     sp.commit()
 }
 
-public fun SharedPreferences.edit(action: (editor: SharedPreferences.Editor) -> Unit) {
+fun SharedPreferences.edit(action: (editor: SharedPreferences.Editor) -> Unit) {
     val sp = edit()
     action(sp)
     sp.commit()

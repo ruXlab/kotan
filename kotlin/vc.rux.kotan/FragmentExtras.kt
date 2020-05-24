@@ -2,12 +2,11 @@ package vc.rux.kotan
 
 import android.app.Fragment
 import android.view.View
-import kotlin.properties.ReadOnlyProperty
-import android.app.DialogFragment
 import kotlin.properties.Delegates
+import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-public inline fun <reified T : View?> Fragment.findView(id: Int): T {
+inline fun <reified T : View?> Fragment.findView(id: Int): T {
     return view.findView<T>(id)
 }
 

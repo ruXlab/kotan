@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.widget.Toast
 
-inline fun toast(context: Context, text: CharSequence, length: Int) {
+fun toast(context: Context, text: CharSequence, length: Int) {
     Toast.makeText(context, text, length).show()
 }
 
